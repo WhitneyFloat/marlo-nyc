@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink:          #1A1917;
+  --ink-soft:     #2C2B28;
+  --cream:        #F8F4EE;
+  --warm-white:   #FDFAF6;
+  --parchment:    #EDE8E0;
+  --terracotta:   #C4603A;
+  --terra-light:  #E8896A;
+  --terra-glow:   #F2A882;
+  --sage:         #6B9E70;
+  --sage-light:   #9DC4A0;
+  --sage-pale:    #D4EAD6;
+  --gold:         #C9A44C;
+  --gold-light:   #E8C97A;
+  --gold-pale:    #FBF3DC;
+  --stone:        #8C8478;
+  --stone-light:  #B8B2AA;
+  --stone-pale:   #E4DED6;
+}
+
+@layer base {
+  html {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-cream text-ink;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Parent app — cream/warm-white backgrounds */
+  .parent-surface {
+    @apply bg-cream text-ink;
+  }
+
+  /* Provider dashboard — dark, ink-soft background */
+  .provider-surface {
+    background-color: var(--ink-soft);
+    @apply text-cream;
+  }
+}
