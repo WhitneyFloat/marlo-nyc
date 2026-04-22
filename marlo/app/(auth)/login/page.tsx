@@ -78,10 +78,10 @@ export default function LoginPage() {
               className="text-3xl text-ink text-center mb-2"
               style={{ fontFamily: '"Palatino Linotype", "Book Antiqua", Palatino, serif' }}
             >
-              Welcome back.
+              welcome back.
             </h1>
             <p className="text-stone font-body text-sm text-center mb-8">
-              Tell Marlo about your family. We&apos;ll handle the rest.
+              tell marlo about your family. we&apos;ll handle the rest.
             </p>
 
             {/* Google OAuth */}
