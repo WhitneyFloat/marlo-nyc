@@ -1,0 +1,687 @@
+import { useState } from “react”;
+
+// ─── MARLO BRAND SYSTEM ───────────────────────────────────────────────────────
+const M = {
+// Core Palette
+ink:        “#1A1917”,
+inkSoft:    “#2C2B28”,
+cream:      “#F8F4EE”,
+warmWhite:  “#FDFAF6”,
+parchment:  “#EDE8E0”,
+
+// Signature Colors
+terracotta: “#C4603A”,
+terraLight: “#E8896A”,
+terraGlow:  “#F2A882”,
+sage:       “#6B9E70”,
+sageLight:  “#9DC4A0”,
+sagePale:   “#D4EAD6”,
+gold:       “#C9A44C”,
+goldLight:  “#E8C97A”,
+
+// Neutrals
+stone:      “#8C8478”,
+stoneLight: “#B8B2AA”,
+stonePale:  “#E4DED6”,
+
+// Typography
+fontDisplay: “‘Palatino Linotype’, ‘Book Antiqua’, Palatino, serif”,
+fontBody:    “‘Gill Sans’, ‘Gill Sans MT’, Calibri, sans-serif”,
+};
+
+const screens = [“Brand System”, “Onboarding”, “Home”, “Discovery”, “Program”, “Registration”, “Family OS”, “Provider”];
+
+export default function MarloIdentity() {
+const [active, setActive] = useState(“Brand System”);
+const [activeChild, setActiveChild] = useState(“Maya”);
+const [registered, setRegistered] = useState(false);
+const [registering, setRegistering] = useState(false);
+
+const handleRegister = () => {
+setRegistering(true);
+setTimeout(() => { setRegistering(false); setRegistered(true); }, 2000);
+};
+
+return (
+<div style={{ background: M.ink, minHeight: “100vh”, fontFamily: M.fontBody }}>
+
+```
+  {/* ── MASTHEAD ── */}
+  <div style={{ borderBottom: `1px solid rgba(255,255,255,0.08)`, padding: "32px 40px 28px", display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
+    <div>
+      <MarloWordmark size={38} light />
+      <div style={{ fontSize: 11, color: M.stone, letterSpacing: "0.25em", marginTop: 6, fontFamily: M.fontBody }}>BRAND IDENTITY SYSTEM · 2026</div>
+    </div>
+    <div style={{ fontSize: 13, color: M.stone, fontFamily: M.fontBody, textAlign: "right" }}>
+      <div style={{ color: M.cream, marginBottom: 2 }}>Marlo's got it.</div>
+      <div>NYC Youth Activity Platform</div>
+    </div>
+  </div>
+
+  {/* ── NAV ── */}
+  <div style={{ padding: "20px 40px", display: "flex", gap: 6, flexWrap: "wrap", borderBottom: `1px solid rgba(255,255,255,0.06)` }}>
+    {screens.map(s => (
+      <button key={s} onClick={() => { setActive(s); setRegistered(false); }}
+        style={{ padding: "8px 18px", borderRadius: 100, border: active === s ? "none" : `1px solid rgba(255,255,255,0.12)`, background: active === s ? M.terracotta : "transparent", color: active === s ? "#fff" : M.stone, fontSize: 12, cursor: "pointer", fontFamily: M.fontBody, letterSpacing: "0.04em", transition: "all 0.2s" }}>
+        {s}
+      </button>
+    ))}
+  </div>
+
+  <div style={{ padding: "48px 40px 80px" }}>
+
+    {/* ════════════════════════════════════════════════════════
+        BRAND SYSTEM
+    ════════════════════════════════════════════════════════ */}
+    {active === "Brand System" && (
+      <div style={{ maxWidth: 1000, margin: "0 auto" }}>
+
+        {/* Wordmark showcase */}
+        <Section label="01 — WORDMARK">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
+            {[
+              { bg: M.cream, light: false, label: "Primary — Light background" },
+              { bg: M.ink, light: true, label: "Primary — Dark background" },
+              { bg: M.terracotta, light: true, label: "Reversed — Terracotta" },
+              { bg: M.sage, light: true, label: "Reversed — Sage" },
+            ].map(v => (
+              <div key={v.label} style={{ background: v.bg, padding: "48px 40px", display: "flex", flexDirection: "column", justifyContent: "space-between", minHeight: 160 }}>
+                <MarloWordmark size={32} light={v.light} />
+                <div style={{ fontSize: 10, color: v.light ? "rgba(255,255,255,0.4)" : M.stone, letterSpacing: "0.15em", fontFamily: M.fontBody }}>{v.label.toUpperCase()}</div>
+              </div>
+            ))}
+          </div>
+        </Section>
+
+        {/* Color system */}
+        <Section label="02 — COLOR SYSTEM">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 2, marginBottom: 2 }}>
+            {[
+              { name: "Marlo Ink", hex: "#1A1917", color: M.ink, light: true },
+              { name: "Terracotta", hex: "#C4603A", color: M.terracotta, light: true },
+              { name: "Sage", hex: "#6B9E70", color: M.sage, light: true },
+              { name: "Gold", hex: "#C9A44C", color: M.gold, light: false },
+            ].map(c => (
+              <div key={c.name} style={{ background: c.color, padding: "32px 24px", minHeight: 120, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                <div style={{ width: 20, height: 20, borderRadius: "50%", background: c.light ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.15)" }} />
+                <div>
+                  <div style={{ fontSize: 14, color: c.light ? "#fff" : M.ink, fontFamily: M.fontDisplay }}>{c.name}</div>
+                  <div style={{ fontSize: 11, color: c.light ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.4)", letterSpacing: "0.1em", fontFamily: M.fontBody }}>{c.hex}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 2 }}>
+            {[
+              { name: "Cream", hex: "#F8F4EE", color: M.cream, light: false },
+              { name: "Terra Light", hex: "#E8896A", color: M.terraLight, light: true },
+              { name: "Sage Light", hex: "#9DC4A0", color: M.sageLight, light: false },
+              { name: "Stone", hex: "#8C8478", color: M.stone, light: true },
+            ].map(c => (
+              <div key={c.name} style={{ background: c.color, padding: "24px", minHeight: 80, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                <div>
+                  <div style={{ fontSize: 13, color: c.light ? "#fff" : M.ink, fontFamily: M.fontDisplay }}>{c.name}</div>
+                  <div style={{ fontSize: 10, color: c.light ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.35)", letterSpacing: "0.1em", fontFamily: M.fontBody }}>{c.hex}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Section>
+
+        {/* Typography */}
+        <Section label="03 — TYPOGRAPHY">
+          <div style={{ background: M.cream, padding: "48px 48px" }}>
+            <div style={{ fontSize: 10, color: M.stone, letterSpacing: "0.2em", marginBottom: 24, fontFamily: M.fontBody }}>DISPLAY — PALATINO</div>
+            <div style={{ fontSize: 56, color: M.ink, fontFamily: M.fontDisplay, lineHeight: 1.1, marginBottom: 8 }}>Marlo's got it.</div>
+            <div style={{ fontSize: 32, color: M.terracotta, fontFamily: M.fontDisplay, lineHeight: 1.2, marginBottom: 32 }}>Your city. Your kids. Handled.</div>
+            <div style={{ width: "100%", height: 1, background: M.stonePale, marginBottom: 32 }} />
+            <div style={{ fontSize: 10, color: M.stone, letterSpacing: "0.2em", marginBottom: 16, fontFamily: M.fontBody }}>BODY — GILL SANS</div>
+            <div style={{ fontSize: 18, color: M.inkSoft, fontFamily: M.fontBody, lineHeight: 1.7, marginBottom: 12 }}>
+              Tell Marlo about your family. We'll take care of the rest — from finding the perfect program to handling registration, waivers, and scheduling.
+            </div>
+            <div style={{ fontSize: 13, color: M.stone, fontFamily: M.fontBody, lineHeight: 1.6 }}>
+              ABCDEFGHIJKLMNOPQRSTUVWXYZ · abcdefghijklmnopqrstuvwxyz · 0123456789
+            </div>
+          </div>
+        </Section>
+
+        {/* Brand voice */}
+        <Section label="04 — BRAND VOICE">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
+            {[
+              { label: "Marlo IS", items: ["Quietly confident", "Warmly in control", "Already three steps ahead", "The friend who handles it", "Present, not pushy"] },
+              { label: "Marlo IS NOT", items: ["Loud or boastful", "Corporate or cold", "Overly playful or kiddie", "Complicated or technical", "Urgent or pressuring"] },
+            ].map(v => (
+              <div key={v.label} style={{ background: v.label.includes("NOT") ? M.inkSoft : M.terracotta, padding: "32px" }}>
+                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", letterSpacing: "0.2em", marginBottom: 20, fontFamily: M.fontBody }}>{v.label}</div>
+                {v.items.map(i => (
+                  <div key={i} style={{ fontSize: 15, color: "#fff", fontFamily: M.fontDisplay, marginBottom: 10, display: "flex", gap: 12, alignItems: "center" }}>
+                    <span style={{ color: "rgba(255,255,255,0.4)", fontSize: 18 }}>{v.label.includes("NOT") ? "×" : "✦"}</span>{i}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </Section>
+
+        {/* Brand moments */}
+        <Section label="05 — BRAND COPY MOMENTS">
+          <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            {[
+              { context: "Tagline", copy: "Marlo's got it.", note: "Primary brand statement" },
+              { context: "Onboarding", copy: "Tell Marlo about your family. We'll handle the rest.", note: "First promise" },
+              { context: "Confirmation", copy: "Marlo's got it. Maya's enrolled.", note: "Post-registration" },
+              { context: "Waitlist Alert", copy: "Marlo found a spot. Tap to claim it.", note: "Push notification" },
+              { context: "App Store", copy: "Marlo finds, matches, and enrolls your kids in the best programs in the city. You just confirm.", note: "Store listing" },
+              { context: "Word of Mouth", copy: "Just get Marlo. It handles everything.", note: "What parents say" },
+            ].map(m => (
+              <div key={m.context} style={{ background: M.inkSoft, padding: "24px 32px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 24 }}>
+                <div style={{ fontSize: 10, color: M.stone, letterSpacing: "0.15em", fontFamily: M.fontBody, minWidth: 120 }}>{m.context.toUpperCase()}</div>
+                <div style={{ flex: 1, fontSize: 18, color: M.cream, fontFamily: M.fontDisplay, lineHeight: 1.4 }}>"{m.copy}"</div>
+                <div style={{ fontSize: 11, color: M.stone, fontFamily: M.fontBody, textAlign: "right", minWidth: 100 }}>{m.note}</div>
+              </div>
+            ))}
+          </div>
+        </Section>
+
+      </div>
+    )}
+
+    {/* ════════════════════════════════════════════════════════
+        ONBOARDING
+    ════════════════════════════════════════════════════════ */}
+    {active === "Onboarding" && (
+      <ScreenLayout label="Onboarding Flow">
+        <PhoneFrame label="Welcome">
+          <div style={{ background: M.terracotta, height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", padding: 32 }}>
+            <div>
+              <MarloWordmark size={22} light />
+              <div style={{ marginTop: 56 }}>
+                <div style={{ fontSize: 11, letterSpacing: "0.25em", color: "rgba(255,255,255,0.55)", fontFamily: M.fontBody, marginBottom: 20 }}>NEW YORK CITY</div>
+                <div style={{ fontSize: 40, color: "#fff", lineHeight: 1.1, fontFamily: M.fontDisplay, marginBottom: 20 }}>Your city.<br />Your kids.<br />Handled.</div>
+                <div style={{ fontSize: 14, color: "rgba(255,255,255,0.7)", lineHeight: 1.7, fontFamily: M.fontBody }}>Tell Marlo about your family. We'll take care of the rest.</div>
+              </div>
+            </div>
+            <div>
+              <Btn light label="Create Family Profile →" />
+              <div style={{ textAlign: "center", color: "rgba(255,255,255,0.45)", fontSize: 13, fontFamily: M.fontBody, marginTop: 14 }}>Already have an account? Sign in</div>
+            </div>
+          </div>
+        </PhoneFrame>
+
+        <PhoneFrame label="Child Profile">
+          <div style={{ background: M.warmWhite, height: "100%", padding: 28, display: "flex", flexDirection: "column", gap: 18 }}>
+            <div>
+              <div style={{ fontSize: 10, color: M.stone, letterSpacing: "0.2em", fontFamily: M.fontBody, marginBottom: 10 }}>STEP 2 OF 4</div>
+              <div style={{ fontSize: 26, color: M.ink, fontFamily: M.fontDisplay, lineHeight: 1.2 }}>Tell us about Maya</div>
+            </div>
+            {[
+              { label: "Age", value: "9 years old" },
+              { label: "Loves", value: "Soccer, Art, Music" },
+              { label: "Available", value: "Mon–Fri · Weekends" },
+              { label: "Early drop-off needed?", value: "Yes — before 8:30am" },
+              { label: "Allergies / Accommodations", value: "Peanut allergy" },
+            ].map(f => (
+              <div key={f.label} style={{ borderBottom: `1px solid ${M.stonePale}`, paddingBottom: 14 }}>
+                <div style={{ fontSize: 10, color: M.stone, letterSpacing: "0.12em", fontFamily: M.fontBody, marginBottom: 4 }}>{f.label.toUpperCase()}</div>
+                <div style={{ fontSize: 15, color: M.ink, fontFamily: M.fontBody }}>{f.value}</div>
+              </div>
+            ))}
+            <div style={{ background: M.ink, borderRadius: 100, padding: "14px 24px", textAlign: "center", color: "#fff", fontSize: 14, fontFamily: M.fontBody, marginTop: "auto" }}>Save Maya's Profile →</div>
+          </div>
+        </PhoneFrame>
+
+        <PhoneFrame label="Preferences">
+          <div style={{ background: M.cream, height: "100%", padding: 28, display: "flex", flexDirection: "column", gap: 18 }}>
+            <div>
+              <div style={{ fontSize: 10, color: M.stone, letterSpacing: "0.2em", fontFamily: M.fontBody, marginBottom: 10 }}>STEP 3 OF 4</div>
+              <div style={{ fontSize: 26, color: M.ink, fontFamily: M.fontDisplay }}>A few quick things</div>
+            </div>
+            <div>
+              <div style={{ fontSize: 12, color: M.stone, fontFamily: M.fontBody, marginBottom: 10 }}>Monthly budget per child</div>
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                {["Under $100", "$100–$200", "$200–$400", "$400+"].map((b, i) => (
+                  <div key={b} style={{ padding: "8px 14px", borderRadius: 100, background: i === 1 ? M.terracotta : M.stonePale, color: i === 1 ? "#fff" : M.ink, fontSize: 12, fontFamily: M.fontBody }}>{b}</div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <div style={{ fontSize: 12, color: M.stone, fontFamily: M.fontBody, marginBottom: 8 }}>Your neighborhood</div>
+              <div style={{ background: "#fff", border: `1px solid ${M.stonePale}`, borderRadius: 10, padding: "12px 16px", fontSize: 14, color: M.ink, fontFamily: M.fontBody }}>Park Slope, Brooklyn</div>
+            </div>
+            <div style={{ background: M.sagePale, borderRadius: 12, padding: 14, borderLeft: `3px solid ${M.sage}` }}>
+              <div style={{ fontSize: 12, color: M.sage, fontFamily: M.fontBody, fontWeight: 600 }}>✦ Scholarship Matching</div>
+              <div style={{ fontSize: 12, color: M.stone, fontFamily: M.fontBody, marginTop: 4, lineHeight: 1.5 }}>Show programs with financial aid or sliding-scale pricing</div>
+            </div>
+            <div style={{ background: M.ink, borderRadius: 100, padding: "14px 24px", textAlign: "center", color: "#fff", fontSize: 14, fontFamily: M.fontBody, marginTop: "auto" }}>Continue →</div>
+          </div>
+        </PhoneFrame>
+      </ScreenLayout>
+    )}
+
+    {/* ════════════════════════════════════════════════════════
+        HOME
+    ════════════════════════════════════════════════════════ */}
+    {active === "Home" && (
+      <ScreenLayout label="Home Feed">
+        <PhoneFrame label="Marlo Home">
+          <div style={{ background: M.warmWhite, height: "100%", display: "flex", flexDirection: "column" }}>
+            <div style={{ padding: "24px 24px 16px", borderBottom: `1px solid ${M.stonePale}` }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+                <MarloWordmark size={20} />
+                <div style={{ width: 38, height: 38, borderRadius: "50%", background: M.terracotta, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: 15, fontFamily: M.fontBody }}>S</div>
+              </div>
+              <div style={{ fontSize: 11, color: M.stone, fontFamily: M.fontBody, letterSpacing: "0.05em" }}>Good morning, Sarah</div>
+              <div style={{ fontSize: 22, color: M.ink, fontFamily: M.fontDisplay, marginTop: 2, marginBottom: 16 }}>What's Maya up to?</div>
+              <div style={{ display: "flex", gap: 8 }}>
+                {["Maya", "Jordan"].map(c => (
+                  <div key={c} onClick={() => setActiveChild(c)} style={{ padding: "6px 16px", borderRadius: 100, background: activeChild === c ? M.ink : M.stonePale, color: activeChild === c ? "#fff" : M.stone, fontSize: 12, cursor: "pointer", fontFamily: M.fontBody, transition: "all 0.2s" }}>{c}</div>
+                ))}
+                <div style={{ padding: "6px 16px", borderRadius: 100, border: `1px dashed ${M.stoneLight}`, color: M.stone, fontSize: 12, fontFamily: M.fontBody }}>+ Add</div>
+              </div>
+            </div>
+
+            <div style={{ margin: "16px 20px", background: `linear-gradient(135deg, ${M.terracotta}, ${M.terraLight})`, borderRadius: 18, padding: 20 }}>
+              <div style={{ fontSize: 10, color: "rgba(255,255,255,0.6)", letterSpacing: "0.2em", fontFamily: M.fontBody, marginBottom: 8 }}>✦ MARLO FOUND</div>
+              <div style={{ fontSize: 16, color: "#fff", fontFamily: M.fontDisplay, lineHeight: 1.4, marginBottom: 14 }}>3 new programs this week that fit {activeChild} perfectly</div>
+              <div style={{ background: "rgba(255,255,255,0.18)", borderRadius: 100, padding: "8px 16px", display: "inline-block", color: "#fff", fontSize: 12, fontFamily: M.fontBody }}>See Matches →</div>
+            </div>
+
+            <div style={{ padding: "0 20px 16px" }}>
+              <div style={{ fontSize: 10, color: M.stone, letterSpacing: "0.15em", fontFamily: M.fontBody, marginBottom: 10 }}>LOOKING FOR</div>
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                {["Summer camps", "After-school", "Weekends", "Tryouts"].map(q => (
+                  <div key={q} style={{ padding: "8px 14px", borderRadius: 100, background: M.cream, border: `1px solid ${M.stonePale}`, color: M.ink, fontSize: 12, fontFamily: M.fontBody }}>{q}</div>
+                ))}
+              </div>
+            </div>
+
+            <div style={{ margin: "0 20px", background: M.gold + "22", borderRadius: 14, padding: 16, borderLeft: `3px solid ${M.gold}` }}>
+              <div style={{ fontSize: 11, color: M.gold, fontFamily: M.fontBody, fontWeight: 600, letterSpacing: "0.05em" }}>⚡ WAITLIST ALERT</div>
+              <div style={{ fontSize: 13, color: M.ink, fontFamily: M.fontBody, marginTop: 6, lineHeight: 1.5 }}>A spot opened at Brooklyn Soccer for {activeChild}. 2 other families notified.</div>
+              <div style={{ fontSize: 13, color: M.terracotta, fontFamily: M.fontDisplay, marginTop: 10 }}>Marlo's got it — tap to claim →</div>
+            </div>
+
+            <div style={{ marginTop: "auto", borderTop: `1px solid ${M.stonePale}`, display: "flex", justifyContent: "space-around", padding: "14px 0" }}>
+              {["🏠", "🔍", "📅", "👤"].map((n, i) => (
+                <div key={n} style={{ fontSize: 20, opacity: i === 0 ? 1 : 0.35 }}>{n}</div>
+              ))}
+            </div>
+          </div>
+        </PhoneFrame>
+
+        <AnnotationPanel items={[
+          { icon: "✦", title: "Marlo Wordmark in App", body: "The wordmark lives at the top of every screen — small, confident, never competing with content. Brand presence without brand noise." },
+          { icon: "🎯", title: "Child-First Home", body: "The home screen opens on the child, not a search bar. Marlo already knows Maya. The parent feels understood before they type a word." },
+          { icon: "⚡", title: "Waitlist Alert Copy", body: "'Marlo's got it — tap to claim' is the tagline living inside the product. Every touchpoint reinforces the brand voice." },
+        ]} />
+      </ScreenLayout>
+    )}
+
+    {/* ════════════════════════════════════════════════════════
+        DISCOVERY
+    ════════════════════════════════════════════════════════ */}
+    {active === "Discovery" && (
+      <ScreenLayout label="AI Discovery">
+        <PhoneFrame label="Search Results">
+          <div style={{ background: M.warmWhite, height: "100%", display: "flex", flexDirection: "column" }}>
+            <div style={{ padding: "18px 20px 14px", background: M.cream, borderBottom: `1px solid ${M.stonePale}` }}>
+              <div style={{ background: "#fff", border: `1px solid ${M.stonePale}`, borderRadius: 10, padding: "11px 16px", fontSize: 13, color: M.ink, fontFamily: M.fontBody, marginBottom: 8 }}>🔍 "Soccer camp July, Brooklyn..."</div>
+              <div style={{ fontSize: 11, color: M.stone, fontFamily: M.fontBody }}>Marlo found <strong style={{ color: M.ink }}>3 matches</strong> for Maya · Best fit first</div>
+            </div>
+            <div style={{ flex: 1, overflow: "auto", padding: "14px 18px", display: "flex", flexDirection: "column", gap: 12 }}>
+              {[
+                { name: "Brooklyn Soccer Academy", cat: "Soccer", hood: "Park Slope", price: "$180/mo", sched: "Sat–Sun 9am", spots: 3, rating: 4.9, match: 98, tags: ["Early Drop-off", "Nut-Free"], color: M.sage, emoji: "⚽" },
+                { name: "Arthaus Kids Studio", cat: "Visual Arts", hood: "Cobble Hill", price: "$155/mo", sched: "Sat 10am–12pm", spots: 5, rating: 4.8, match: 94, tags: ["Small Class"], color: M.terracotta, emoji: "🎨" },
+                { name: "Prospect Park Swim", cat: "Swimming", hood: "Flatbush", price: "$210/mo", sched: "MWF 7:30am", spots: 1, rating: 4.7, match: 89, tags: ["Early Drop-off"], color: "#4A7FA5", emoji: "🏊" },
+              ].map((p, i) => (
+                <div key={p.name} style={{ background: "#fff", borderRadius: 16, padding: 16, border: `1px solid ${M.stonePale}`, cursor: "pointer", position: "relative", boxShadow: i === 0 ? `0 4px 24px ${M.terracotta}18` : "none" }}>
+                  {i === 0 && <div style={{ position: "absolute", top: -9, left: 14, background: M.terracotta, color: "#fff", fontSize: 9, padding: "3px 10px", borderRadius: 100, fontFamily: M.fontBody, letterSpacing: "0.12em" }}>BEST MATCH</div>}
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
+                    <div>
+                      <div style={{ fontSize: 15, color: M.ink, fontFamily: M.fontDisplay, marginBottom: 2 }}>{p.emoji} {p.name}</div>
+                      <div style={{ fontSize: 11, color: M.stone, fontFamily: M.fontBody }}>{p.hood} · {p.cat}</div>
+                    </div>
+                    <div style={{ textAlign: "right" }}>
+                      <div style={{ fontSize: 18, color: p.color, fontFamily: M.fontBody, fontWeight: 700 }}>{p.match}%</div>
+                      <div style={{ fontSize: 9, color: M.stone, fontFamily: M.fontBody, letterSpacing: "0.1em" }}>MATCH</div>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", gap: 14, marginBottom: 10 }}>
+                    <div style={{ fontSize: 12, color: M.ink, fontFamily: M.fontBody }}>💰 {p.price}</div>
+                    <div style={{ fontSize: 12, color: M.ink, fontFamily: M.fontBody }}>📅 {p.sched}</div>
+                  </div>
+                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10 }}>
+                    {p.tags.map(t => <div key={t} style={{ padding: "3px 10px", borderRadius: 100, background: M.cream, color: M.stone, fontSize: 10, fontFamily: M.fontBody }}>{t}</div>)}
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <div style={{ fontSize: 11, color: M.stone, fontFamily: M.fontBody }}>⭐ {p.rating}</div>
+                    <div style={{ fontSize: 11, color: p.spots <= 2 ? M.terracotta : M.sage, fontFamily: M.fontBody, fontWeight: 600 }}>{p.spots} spot{p.spots !== 1 ? "s" : ""} left</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </PhoneFrame>
+        <AnnotationPanel items={[
+          { icon: "3", title: "3 Results. Always.", body: "Marlo never returns 47 options. The intelligence is in the curation. Parents choose, they don't browse." },
+          { icon: "✦", title: "'Marlo found' Language", body: "Not 'Search results.' Marlo found. The brand voice is present in every UI label — the product feels like a person." },
+          { icon: "🔴", title: "Live Scarcity", body: "Real-time spot counts. '1 spot left' in terracotta creates urgency without manufactured pressure." },
+        ]} />
+      </ScreenLayout>
+    )}
+
+    {/* ════════════════════════════════════════════════════════
+        PROGRAM
+    ════════════════════════════════════════════════════════ */}
+    {active === "Program" && (
+      <ScreenLayout label="Program Detail">
+        <PhoneFrame label="Program View">
+          <div style={{ background: M.warmWhite, height: "100%", display: "flex", flexDirection: "column" }}>
+            <div style={{ background: `linear-gradient(150deg, ${M.sage}, ${M.sageLight})`, padding: "28px 24px 24px", position: "relative" }}>
+              <div style={{ fontSize: 10, color: "rgba(255,255,255,0.65)", letterSpacing: "0.2em", fontFamily: M.fontBody, marginBottom: 8 }}>⚽ SOCCER · PARK SLOPE</div>
+              <div style={{ fontSize: 26, color: "#fff", fontFamily: M.fontDisplay, lineHeight: 1.2, marginBottom: 6 }}>Brooklyn Soccer Academy</div>
+              <div style={{ fontSize: 13, color: "rgba(255,255,255,0.75)", fontFamily: M.fontBody }}>⭐ 4.9 · 84 parent reviews</div>
+              <div style={{ position: "absolute", top: 20, right: 20, background: "rgba(255,255,255,0.22)", borderRadius: 100, padding: "5px 12px", fontSize: 12, color: "#fff", fontFamily: M.fontBody }}>98% match</div>
+            </div>
+            <div style={{ flex: 1, overflow: "auto", padding: 22, display: "flex", flexDirection: "column", gap: 16 }}>
+              <div style={{ display: "flex", gap: 10 }}>
+                {[{ icon: "💰", val: "$180/mo" }, { icon: "📅", val: "Sat–Sun 9am" }, { icon: "📍", val: "0.8 mi" }].map(d => (
+                  <div key={d.val} style={{ flex: 1, background: M.cream, borderRadius: 12, padding: "12px 6px", textAlign: "center" }}>
+                    <div style={{ fontSize: 16, marginBottom: 4 }}>{d.icon}</div>
+                    <div style={{ fontSize: 11, color: M.ink, fontFamily: M.fontBody }}>{d.val}</div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ background: M.terracotta + "14", borderRadius: 12, padding: 16, borderLeft: `3px solid ${M.terracotta}` }}>
+                <div style={{ fontSize: 11, color: M.terracotta, fontFamily: M.fontBody, fontWeight: 600, letterSpacing: "0.08em", marginBottom: 10 }}>✦ WHY MARLO CHOSE THIS FOR MAYA</div>
+                {["Early drop-off from 7:45am ✓", "Peanut-free facility ✓", "Ages 7–10 division ✓", "Within your $200/mo budget ✓"].map(r => (
+                  <div key={r} style={{ fontSize: 13, color: M.ink, fontFamily: M.fontBody, marginBottom: 6 }}>{r}</div>
+                ))}
+              </div>
+              <div style={{ fontSize: 13, color: M.ink, fontFamily: M.fontBody, lineHeight: 1.65 }}>
+                Competitive and recreational soccer for ages 5–14. Professional coaching, focus on fundamentals and teamwork. Spring and summer sessions available.
+              </div>
+              <div style={{ display: "flex", gap: 10 }}>
+                <div style={{ flex: 1, background: M.stonePale, borderRadius: 12, padding: 14, textAlign: "center" }}>
+                  <div style={{ fontSize: 10, color: M.stone, fontFamily: M.fontBody, letterSpacing: "0.1em" }}>SPOTS LEFT</div>
+                  <div style={{ fontSize: 24, color: M.terracotta, fontFamily: M.fontBody, fontWeight: 700 }}>3</div>
+                </div>
+                <div style={{ flex: 1, background: M.stonePale, borderRadius: 12, padding: 14, textAlign: "center" }}>
+                  <div style={{ fontSize: 10, color: M.stone, fontFamily: M.fontBody, letterSpacing: "0.1em" }}>STARTS</div>
+                  <div style={{ fontSize: 16, color: M.ink, fontFamily: M.fontDisplay }}>June 7</div>
+                </div>
+              </div>
+            </div>
+            <div style={{ padding: "14px 22px", borderTop: `1px solid ${M.stonePale}` }}>
+              <div onClick={() => setActive("Registration")} style={{ background: M.terracotta, borderRadius: 100, padding: "15px 24px", textAlign: "center", color: "#fff", fontSize: 15, cursor: "pointer", fontFamily: M.fontDisplay }}>
+                Marlo's got it — Register Maya →
+              </div>
+            </div>
+          </div>
+        </PhoneFrame>
+        <AnnotationPanel items={[
+          { icon: "✦", title: "CTA = Brand Voice", body: "'Marlo's got it — Register Maya' is the tagline living on the most important button in the app. Every tap reinforces the brand." },
+          { icon: "🧠", title: "'Why Marlo Chose This'", body: "The trust panel. The AI explains its reasoning for this specific child. Parents feel understood, not marketed to." },
+          { icon: "🎨", title: "Sage Hero = Program Type", body: "Program category colors the hero. Soccer = sage. Arts = terracotta. Swimming = slate blue. The color system communicates before words do." },
+        ]} />
+      </ScreenLayout>
+    )}
+
+    {/* ════════════════════════════════════════════════════════
+        REGISTRATION
+    ════════════════════════════════════════════════════════ */}
+    {active === "Registration" && (
+      <ScreenLayout label="Registration Flow">
+        <PhoneFrame label="Confirm & Register">
+          <div style={{ background: M.warmWhite, height: "100%", display: "flex", flexDirection: "column" }}>
+            {!registered ? (
+              <>
+                <div style={{ padding: "22px 24px 16px", borderBottom: `1px solid ${M.stonePale}` }}>
+                  <MarloWordmark size={16} />
+                  <div style={{ fontSize: 22, color: M.ink, fontFamily: M.fontDisplay, marginTop: 14, marginBottom: 4 }}>Brooklyn Soccer Academy</div>
+                  <div style={{ fontSize: 13, color: M.stone, fontFamily: M.fontBody }}>June 7 – Aug 30 · $180/month</div>
+                </div>
+                <div style={{ flex: 1, padding: 22, display: "flex", flexDirection: "column", gap: 14, overflow: "auto" }}>
+                  <div style={{ background: M.sagePale, borderRadius: 12, padding: 14, borderLeft: `3px solid ${M.sage}` }}>
+                    <div style={{ fontSize: 11, color: M.sage, fontFamily: M.fontBody, fontWeight: 600, letterSpacing: "0.08em" }}>✦ MARLO PRE-FILLED YOUR FORM</div>
+                    <div style={{ fontSize: 12, color: M.stone, fontFamily: M.fontBody, marginTop: 4, lineHeight: 1.5 }}>Using Maya's saved profile. Review and confirm below.</div>
+                  </div>
+                  {[
+                    { label: "Child", value: "Maya, Age 9" },
+                    { label: "Parent", value: "Sarah Johnson" },
+                    { label: "Emergency Contact", value: "Marcus · (917) 555-0182" },
+                    { label: "Allergy on File", value: "Peanut allergy — noted ✓" },
+                    { label: "Drop-off", value: "Early, 7:45am ✓" },
+                    { label: "Payment", value: "Visa ···· 4821 · $180/mo" },
+                  ].map(f => (
+                    <div key={f.label} style={{ borderBottom: `1px solid ${M.stonePale}`, paddingBottom: 12 }}>
+                      <div style={{ fontSize: 10, color: M.stone, fontFamily: M.fontBody, letterSpacing: "0.1em", marginBottom: 3 }}>{f.label.toUpperCase()}</div>
+                      <div style={{ fontSize: 14, color: M.ink, fontFamily: M.fontBody }}>{f.value}</div>
+                    </div>
+                  ))}
+                  <div style={{ background: M.cream, borderRadius: 12, padding: 14 }}>
+                    <div style={{ fontSize: 10, color: M.stone, fontFamily: M.fontBody, letterSpacing: "0.1em", marginBottom: 6 }}>WAIVER & RELEASE</div>
+                    <div style={{ fontSize: 12, color: M.stone, fontFamily: M.fontBody, lineHeight: 1.5, marginBottom: 8 }}>Standard liability waiver. Signed digitally, stored in your Marlo account.</div>
+                    <div style={{ fontSize: 13, color: M.terracotta, fontFamily: M.fontBody }}>☑ I agree to the program waiver</div>
+                  </div>
+                </div>
+                <div style={{ padding: "14px 22px", borderTop: `1px solid ${M.stonePale}` }}>
+                  <div onClick={handleRegister} style={{ background: registering ? M.stone : M.terracotta, borderRadius: 100, padding: "15px", textAlign: "center", color: "#fff", fontSize: 15, cursor: "pointer", fontFamily: M.fontDisplay, transition: "all 0.3s" }}>
+                    {registering ? "Marlo's handling it..." : "Confirm Registration →"}
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 32, gap: 20, background: M.warmWhite }}>
+                <div style={{ fontSize: 56 }}>🎉</div>
+                <MarloWordmark size={22} />
+                <div style={{ fontSize: 28, color: M.ink, fontFamily: M.fontDisplay, textAlign: "center", lineHeight: 1.2 }}>Marlo's got it.<br />Maya's enrolled.</div>
+                <div style={{ fontSize: 14, color: M.stone, fontFamily: M.fontBody, textAlign: "center", lineHeight: 1.7 }}>Brooklyn Soccer Academy<br />June 7 start · Confirmation sent</div>
+                <div style={{ background: M.cream, borderRadius: 16, padding: 20, width: "100%", display: "flex", flexDirection: "column", gap: 10 }}>
+                  {["Registration confirmed", "Waiver signed & filed", "Added to Family Schedule", "Payment set up · $180/mo"].map(i => (
+                    <div key={i} style={{ fontSize: 13, color: M.ink, fontFamily: M.fontBody }}>✅ {i}</div>
+                  ))}
+                </div>
+                <div style={{ background: M.terracotta, borderRadius: 100, padding: "13px 32px", color: "#fff", fontSize: 14, fontFamily: M.fontDisplay, cursor: "pointer" }}>Back to Home</div>
+              </div>
+            )}
+          </div>
+        </PhoneFrame>
+        <AnnotationPanel items={[
+          { icon: "⚡", title: "Loading State = Brand Voice", body: "'Marlo's handling it...' — even the loading state speaks in Marlo's voice. Every moment of the experience is branded." },
+          { icon: "🎉", title: "The Confirmation Moment", body: "'Marlo's got it. Maya's enrolled.' — the tagline as the confirmation. The most important screen in the app is the most on-brand screen in the app." },
+          { icon: "📄", title: "Waiver In-App", body: "Signed digitally, stored in Marlo account and provider dashboard. No paper. No email. No clipboard at drop-off." },
+        ]} />
+      </ScreenLayout>
+    )}
+
+    {/* ════════════════════════════════════════════════════════
+        FAMILY OS
+    ════════════════════════════════════════════════════════ */}
+    {active === "Family OS" && (
+      <ScreenLayout label="Family OS">
+        <PhoneFrame label="Family Schedule">
+          <div style={{ background: M.warmWhite, height: "100%", display: "flex", flexDirection: "column" }}>
+            <div style={{ padding: "20px 22px 14px", borderBottom: `1px solid ${M.stonePale}` }}>
+              <MarloWordmark size={16} />
+              <div style={{ fontSize: 22, color: M.ink, fontFamily: M.fontDisplay, marginTop: 12 }}>Family Schedule</div>
+              <div style={{ fontSize: 12, color: M.stone, fontFamily: M.fontBody, marginTop: 2 }}>Maya · Jordan · April 2026</div>
+            </div>
+            <div style={{ padding: "14px 18px", display: "flex", gap: 6 }}>
+              {["M", "T", "W", "T", "F", "S", "S"].map((d, i) => (
+                <div key={i} style={{ flex: 1, textAlign: "center" }}>
+                  <div style={{ fontSize: 10, color: M.stone, fontFamily: M.fontBody, marginBottom: 6 }}>{d}</div>
+                  <div style={{ width: 30, height: 30, borderRadius: "50%", background: i === 5 || i === 2 ? M.terracotta : M.cream, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto", color: i === 5 || i === 2 ? "#fff" : M.stone, fontSize: 12, fontFamily: M.fontBody }}>{20 + i}</div>
+                </div>
+              ))}
+            </div>
+            <div style={{ flex: 1, padding: "0 18px 16px", display: "flex", flexDirection: "column", gap: 10, overflow: "auto" }}>
+              {[
+                { child: "Maya", program: "Brooklyn Soccer Academy", day: "Sat", time: "9:00 AM", color: M.sage },
+                { child: "Jordan", program: "Arthaus Kids Studio", day: "Sat", time: "10:00 AM", color: M.terracotta },
+                { child: "Maya", program: "Piano with Ms. Rivera", day: "Wed", time: "4:30 PM", color: M.gold },
+                { child: "Jordan", program: "Prospect Park Swim", day: "Mon", time: "7:30 AM", color: "#4A7FA5" },
+              ].map((e, i) => (
+                <div key={i} style={{ background: "#fff", border: `1px solid ${M.stonePale}`, borderRadius: 14, padding: 14, borderLeft: `4px solid ${e.color}` }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <div>
+                      <div style={{ fontSize: 13, color: M.ink, fontFamily: M.fontDisplay, marginBottom: 2 }}>{e.program}</div>
+                      <div style={{ fontSize: 11, color: M.stone, fontFamily: M.fontBody }}>{e.day} · {e.time}</div>
+                    </div>
+                    <div style={{ background: e.color + "22", color: e.color, padding: "4px 10px", borderRadius: 100, fontSize: 11, fontFamily: M.fontBody }}>{e.child}</div>
+                  </div>
+                </div>
+              ))}
+              <div style={{ background: M.gold + "1A", borderRadius: 12, padding: 14, borderLeft: `3px solid ${M.gold}` }}>
+                <div style={{ fontSize: 11, color: M.gold, fontFamily: M.fontBody, fontWeight: 600 }}>⚠️ MARLO NOTICED</div>
+                <div style={{ fontSize: 12, color: M.ink, fontFamily: M.fontBody, marginTop: 4, lineHeight: 1.5 }}>Maya's piano and Jordan's swim overlap Wednesday. Tap to resolve.</div>
+              </div>
+              <div style={{ background: M.sagePale, borderRadius: 12, padding: 14, borderLeft: `3px solid ${M.sage}` }}>
+                <div style={{ fontSize: 11, color: M.sage, fontFamily: M.fontBody, fontWeight: 600 }}>📅 MARLO REMINDER</div>
+                <div style={{ fontSize: 12, color: M.ink, fontFamily: M.fontBody, marginTop: 4, lineHeight: 1.5 }}>Soccer Fall session opens May 1. Want Marlo to hold Maya's spot?</div>
+              </div>
+            </div>
+          </div>
+        </PhoneFrame>
+        <AnnotationPanel items={[
+          { icon: "🏠", title: "The Family OS", body: "Every program, every child, one view. Once a family's schedule lives in Marlo, they cannot leave. This is the stickiness engine." },
+          { icon: "✦", title: "'Marlo Noticed'", body: "The conflict alert uses Marlo's voice — not a system warning. 'Marlo noticed' feels like a friend looking out for you." },
+          { icon: "📅", title: "'Marlo Reminder'", body: "Proactive re-enrollment prompts before the parent thinks to worry. This is where the platform stops being useful and becomes indispensable." },
+        ]} />
+      </ScreenLayout>
+    )}
+
+    {/* ════════════════════════════════════════════════════════
+        PROVIDER
+    ════════════════════════════════════════════════════════ */}
+    {active === "Provider" && (
+      <ScreenLayout label="Provider Dashboard">
+        <div style={{ width: 440, background: M.inkSoft, borderRadius: 24, overflow: "hidden", border: `1px solid rgba(255,255,255,0.07)` }}>
+          <div style={{ padding: "28px 32px 20px", borderBottom: `1px solid rgba(255,255,255,0.08)` }}>
+            <MarloWordmark size={18} light />
+            <div style={{ fontSize: 10, color: M.stone, letterSpacing: "0.2em", fontFamily: M.fontBody, marginTop: 16, marginBottom: 8 }}>PROVIDER DASHBOARD</div>
+            <div style={{ fontSize: 26, color: M.cream, fontFamily: M.fontDisplay }}>Brooklyn Soccer Academy</div>
+            <div style={{ fontSize: 13, color: M.stone, fontFamily: M.fontBody, marginTop: 4 }}>Pro Plan · April 2026</div>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, background: "rgba(255,255,255,0.04)" }}>
+            {[
+              { label: "Profile Views", value: "1,247", change: "+18%" },
+              { label: "Saved by Parents", value: "342", change: "+31%" },
+              { label: "Enrollments", value: "28", change: "+12%" },
+              { label: "Avg. Days to Fill", value: "4.2", change: "-22%" },
+            ].map(s => (
+              <div key={s.label} style={{ background: M.inkSoft, padding: "20px 24px" }}>
+                <div style={{ fontSize: 10, color: M.stone, fontFamily: M.fontBody, letterSpacing: "0.08em", marginBottom: 8 }}>{s.label.toUpperCase()}</div>
+                <div style={{ fontSize: 28, color: M.cream, fontFamily: M.fontBody, fontWeight: 300, marginBottom: 4 }}>{s.value}</div>
+                <div style={{ fontSize: 12, color: M.sage, fontFamily: M.fontBody }}>{s.change} this month</div>
+              </div>
+            ))}
+          </div>
+          <div style={{ padding: "24px 32px" }}>
+            <div style={{ fontSize: 10, color: M.stone, letterSpacing: "0.15em", fontFamily: M.fontBody, marginBottom: 16 }}>ENROLLMENT PIPELINE</div>
+            {[
+              { label: "Confirmed", count: 28, total: 35, color: M.sage },
+              { label: "Pending payment", count: 7, total: 35, color: M.gold },
+              { label: "On Waitlist", count: 14, total: 35, color: M.stoneLight },
+            ].map(p => (
+              <div key={p.label} style={{ marginBottom: 14 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+                  <div style={{ fontSize: 13, color: M.cream, fontFamily: M.fontBody }}>{p.label}</div>
+                  <div style={{ fontSize: 13, color: p.color, fontFamily: M.fontBody, fontWeight: 600 }}>{p.count}</div>
+                </div>
+                <div style={{ height: 3, background: "rgba(255,255,255,0.08)", borderRadius: 100 }}>
+                  <div style={{ height: "100%", width: `${(p.count / p.total) * 100}%`, background: p.color, borderRadius: 100 }} />
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{ margin: "0 32px 24px", background: `linear-gradient(135deg, ${M.terracotta}28, ${M.gold}18)`, border: `1px solid ${M.terracotta}35`, borderRadius: 14, padding: 20 }}>
+            <div style={{ fontSize: 10, color: M.terracotta, fontFamily: M.fontBody, letterSpacing: "0.15em", marginBottom: 10 }}>✦ MARLO INSIGHT</div>
+            <div style={{ fontSize: 14, color: M.cream, fontFamily: M.fontDisplay, lineHeight: 1.55 }}>Your Friday 4pm slot fills 3× faster than Saturday morning. Adding a second Friday session could drive 22 additional enrollments.</div>
+          </div>
+          <div style={{ margin: "0 32px 32px", display: "flex", gap: 10 }}>
+            <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", borderRadius: 12, padding: 16, textAlign: "center" }}>
+              <div style={{ fontSize: 22, color: M.cream, fontFamily: M.fontBody }}>28</div>
+              <div style={{ fontSize: 10, color: M.stone, fontFamily: M.fontBody, letterSpacing: "0.1em" }}>WAIVERS SIGNED</div>
+            </div>
+            <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", borderRadius: 12, padding: 16, textAlign: "center" }}>
+              <div style={{ fontSize: 22, color: M.gold, fontFamily: M.fontBody }}>3</div>
+              <div style={{ fontSize: 10, color: M.stone, fontFamily: M.fontBody, letterSpacing: "0.1em" }}>PENDING</div>
+            </div>
+          </div>
+        </div>
+        <AnnotationPanel items={[
+          { icon: "✦", title: "'Marlo Insight' — Not 'Analytics'", body: "The AI insight card speaks in Marlo's voice. Not a data dashboard label — a trusted advisor telling you what to do next." },
+          { icon: "🌙", title: "Dark Provider Aesthetic", body: "Deliberately different from the parent app. This is business software. Dark, data-forward, Shopify meets Stripe." },
+          { icon: "📊", title: "Providers Pay for This", body: "This dashboard is why providers upgrade from free to Pro. Not a badge — a business intelligence tool they actually run their program with." },
+        ]} />
+      </ScreenLayout>
+    )}
+
+  </div>
+</div>
+```
+
+);
+}
+
+// ─── COMPONENTS ──────────────────────────────────────────────────────────────
+
+function MarloWordmark({ size = 28, light = false }) {
+return (
+<div style={{ display: “flex”, alignItems: “baseline”, gap: size * 0.15 }}>
+<span style={{ fontSize: size, fontFamily: “‘Palatino Linotype’, ‘Book Antiqua’, Palatino, serif”, color: light ? “#F8F4EE” : M.ink, letterSpacing: “-0.02em”, fontWeight: 400, lineHeight: 1 }}>marlo</span>
+<span style={{ width: size * 0.18, height: size * 0.18, borderRadius: “50%”, background: M.terracotta, display: “inline-block”, marginBottom: size * 0.05 }} />
+</div>
+);
+}
+
+function Btn({ label, light = false }) {
+return (
+<div style={{ background: light ? “rgba(255,255,255,0.2)” : M.ink, borderRadius: 100, padding: “14px 24px”, textAlign: “center”, color: “#fff”, fontSize: 14, fontFamily: M.fontBody, cursor: “pointer” }}>{label}</div>
+);
+}
+
+function PhoneFrame({ children, label }) {
+return (
+<div style={{ display: “flex”, flexDirection: “column”, alignItems: “center”, gap: 12 }}>
+<div style={{ fontSize: 10, color: M.stone, fontFamily: M.fontBody, letterSpacing: “0.15em”, textTransform: “uppercase” }}>{label}</div>
+<div style={{ width: 340, height: 680, background: M.ink, borderRadius: 44, padding: 12, boxShadow: “0 40px 100px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.08)” }}>
+<div style={{ width: 90, height: 26, background: M.ink, borderRadius: 100, margin: “0 auto 8px”, position: “relative”, zIndex: 10 }} />
+<div style={{ height: 582, borderRadius: 34, overflow: “hidden” }}>{children}</div>
+</div>
+</div>
+);
+}
+
+function Section({ label, children }) {
+return (
+<div style={{ marginBottom: 48 }}>
+<div style={{ fontSize: 10, color: M.stone, letterSpacing: “0.25em”, fontFamily: M.fontBody, marginBottom: 16, textTransform: “uppercase” }}>{label}</div>
+{children}
+</div>
+);
+}
+
+function ScreenLayout({ label, children }) {
+return (
+<div style={{ display: “flex”, gap: 40, flexWrap: “wrap”, justifyContent: “center”, alignItems: “flex-start” }}>
+{children}
+</div>
+);
+}
+
+function AnnotationPanel({ items }) {
+return (
+<div style={{ display: “flex”, flexDirection: “column”, gap: 16, maxWidth: 300, justifyContent: “center” }}>
+{items.map(a => (
+<div key={a.title} style={{ background: “rgba(255,255,255,0.03)”, border: “1px solid rgba(255,255,255,0.07)”, borderRadius: 16, padding: 22 }}>
+<div style={{ fontSize: 18, marginBottom: 8, color: M.terracotta, fontFamily: M.fontDisplay }}>{a.icon}</div>
+<div style={{ fontSize: 14, color: M.cream, fontFamily: M.fontDisplay, marginBottom: 8 }}>{a.title}</div>
+<div style={{ fontSize: 13, color: M.stone, fontFamily: M.fontBody, lineHeight: 1.65 }}>{a.body}</div>
+</div>
+))}
+</div>
+);
+}
