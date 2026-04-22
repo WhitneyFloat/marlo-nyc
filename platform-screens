@@ -1,0 +1,693 @@
+import { useState } from “react”;
+
+const theme = {
+cream: “#F7F3EE”,
+warmWhite: “#FDFAF7”,
+charcoal: “#1C1C1A”,
+softBlack: “#2A2A27”,
+terracotta: “#C4613A”,
+terracottaLight: “#E8896A”,
+sage: “#7A9E7E”,
+sageLight: “#A8C5AB”,
+gold: “#C9A84C”,
+goldLight: “#E8C97A”,
+stone: “#8C8478”,
+stoneLight: “#C4BDB5”,
+stonePale: “#E8E2DC”,
+error: “#C4613A”,
+};
+
+const screens = [“Onboarding”, “Home”, “Discovery”, “Program”, “Registration”, “Family OS”, “Provider Dashboard”];
+
+const mockPrograms = [
+{
+id: 1,
+name: “Brooklyn Soccer Academy”,
+category: “Soccer”,
+neighborhood: “Park Slope”,
+price: “$180/mo”,
+schedule: “Sat & Sun 9–11am”,
+spotsLeft: 3,
+rating: 4.9,
+reviews: 84,
+match: 98,
+tags: [“Early Drop-off”, “Nut-Free”, “Ages 7–10”],
+color: theme.sage,
+emoji: “⚽”,
+},
+{
+id: 2,
+name: “Arthaus Kids Studio”,
+category: “Visual Arts”,
+neighborhood: “Cobble Hill”,
+price: “$155/mo”,
+schedule: “Sat 10am–12pm”,
+spotsLeft: 5,
+rating: 4.8,
+reviews: 61,
+match: 94,
+tags: [“Small Class”, “All Materials Included”],
+color: theme.terracotta,
+emoji: “🎨”,
+},
+{
+id: 3,
+name: “Prospect Park Swim Club”,
+category: “Swimming”,
+neighborhood: “Flatbush”,
+price: “$210/mo”,
+schedule: “Mon, Wed, Fri 7:30–8:30am”,
+spotsLeft: 1,
+rating: 4.7,
+reviews: 112,
+match: 89,
+tags: [“Early Drop-off”, “Competitive Track Available”],
+color: “#4A7FA5”,
+emoji: “🏊”,
+},
+];
+
+const familyEvents = [
+{ child: “Maya”, program: “Brooklyn Soccer Academy”, day: “Sat”, time: “9:00 AM”, color: theme.sage },
+{ child: “Jordan”, program: “Arthaus Kids Studio”, day: “Sat”, time: “10:00 AM”, color: theme.terracotta },
+{ child: “Maya”, program: “Piano with Ms. Rivera”, day: “Wed”, time: “4:30 PM”, color: theme.gold },
+{ child: “Jordan”, program: “Prospect Park Swim”, day: “Mon”, time: “7:30 AM”, color: “#4A7FA5” },
+];
+
+const providerStats = [
+{ label: “Profile Views”, value: “1,247”, change: “+18%”, up: true },
+{ label: “Saved by Parents”, value: “342”, change: “+31%”, up: true },
+{ label: “Enrollments This Month”, value: “28”, change: “+12%”, up: true },
+{ label: “Avg. Days to Fill”, value: “4.2”, change: “-22%”, up: true },
+];
+
+export default function App() {
+const [activeScreen, setActiveScreen] = useState(“Home”);
+const [selectedProgram, setSelectedProgram] = useState(null);
+const [registering, setRegistering] = useState(false);
+const [registered, setRegistered] = useState(false);
+const [activeChild, setActiveChild] = useState(“Maya”);
+
+const handleRegister = () => {
+setRegistering(true);
+setTimeout(() => {
+setRegistering(false);
+setRegistered(true);
+}, 2000);
+};
+
+return (
+<div style={{
+fontFamily: “‘Georgia’, ‘Times New Roman’, serif”,
+background: theme.charcoal,
+minHeight: “100vh”,
+display: “flex”,
+flexDirection: “column”,
+alignItems: “center”,
+padding: “24px 16px 48px”,
+}}>
+
+```
+  {/* Header */}
+  <div style={{ width: "100%", maxWidth: 900, marginBottom: 32, textAlign: "center" }}>
+    <div style={{
+      fontSize: 11,
+      letterSpacing: "0.3em",
+      color: theme.stone,
+      textTransform: "uppercase",
+      marginBottom: 8,
+      fontFamily: "'Georgia', serif",
+    }}>Platform Concept</div>
+    <div style={{
+      fontSize: 42,
+      fontWeight: "400",
+      color: theme.cream,
+      letterSpacing: "-0.02em",
+      lineHeight: 1,
+      marginBottom: 4,
+    }}>
+      Screen Architecture
+    </div>
+    <div style={{ fontSize: 15, color: theme.stone, fontFamily: "sans-serif" }}>
+      Parent App · Provider Dashboard · AI Agent Layer
+    </div>
+  </div>
+
+  {/* Nav */}
+  <div style={{
+    display: "flex",
+    gap: 6,
+    marginBottom: 40,
+    flexWrap: "wrap",
+    justifyContent: "center",
+    maxWidth: 900,
+    width: "100%",
+  }}>
+    {screens.map(s => (
+      <button key={s} onClick={() => { setActiveScreen(s); setSelectedProgram(null); setRegistered(false); }}
+        style={{
+          padding: "8px 16px",
+          borderRadius: 100,
+          border: activeScreen === s ? "none" : `1px solid ${theme.stone}40`,
+          background: activeScreen === s ? theme.terracotta : "transparent",
+          color: activeScreen === s ? theme.warmWhite : theme.stone,
+          fontSize: 13,
+          cursor: "pointer",
+          fontFamily: "sans-serif",
+          letterSpacing: "0.02em",
+          transition: "all 0.2s",
+        }}>{s}</button>
+    ))}
+  </div>
+
+  {/* Screen Container */}
+  <div style={{ width: "100%", maxWidth: 900 }}>
+
+    {/* ONBOARDING */}
+    {activeScreen === "Onboarding" && (
+      <div style={{ display: "flex", gap: 24, flexWrap: "wrap", justifyContent: "center" }}>
+        {/* Step 1 */}
+        <PhoneFrame label="Step 1 of 4 — Welcome">
+          <div style={{ background: theme.terracotta, height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", padding: 32 }}>
+            <div>
+              <div style={{ fontSize: 11, letterSpacing: "0.3em", color: "rgba(255,255,255,0.6)", textTransform: "uppercase", marginBottom: 48, fontFamily: "sans-serif" }}>Welcome</div>
+              <div style={{ fontSize: 38, color: "#fff", lineHeight: 1.15, fontWeight: 400, marginBottom: 16 }}>
+                Your city.<br />Your kid.<br />Handled.
+              </div>
+              <div style={{ fontSize: 14, color: "rgba(255,255,255,0.75)", lineHeight: 1.6, fontFamily: "sans-serif" }}>
+                Tell us about your family. We'll take care of the rest — from finding the perfect program to handling registration.
+              </div>
+            </div>
+            <div>
+              <div style={{ background: "rgba(255,255,255,0.2)", borderRadius: 100, padding: "14px 24px", textAlign: "center", color: "#fff", fontSize: 15, marginBottom: 12, fontFamily: "sans-serif" }}>
+                Create Family Profile →
+              </div>
+              <div style={{ textAlign: "center", color: "rgba(255,255,255,0.5)", fontSize: 13, fontFamily: "sans-serif" }}>Already have an account? Sign in</div>
+            </div>
+          </div>
+        </PhoneFrame>
+
+        {/* Step 2 */}
+        <PhoneFrame label="Step 2 of 4 — Add a Child">
+          <div style={{ background: theme.warmWhite, height: "100%", padding: 28, display: "flex", flexDirection: "column", gap: 20 }}>
+            <div style={{ fontSize: 11, letterSpacing: "0.3em", color: theme.stone, textTransform: "uppercase", fontFamily: "sans-serif" }}>About Your Child</div>
+            <div style={{ fontSize: 26, color: theme.charcoal, lineHeight: 1.2 }}>Let's get to know Maya</div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              {[
+                { label: "Age", value: "9 years old" },
+                { label: "Interests", value: "Soccer, Art, Music" },
+                { label: "Schedule", value: "Mon–Fri available" },
+                { label: "Needs early drop-off?", value: "Yes, before 8:30am" },
+                { label: "Any allergies or accommodations?", value: "Peanut allergy" },
+              ].map(f => (
+                <div key={f.label} style={{ borderBottom: `1px solid ${theme.stonePale}`, paddingBottom: 12 }}>
+                  <div style={{ fontSize: 11, color: theme.stone, marginBottom: 4, fontFamily: "sans-serif", letterSpacing: "0.05em" }}>{f.label.toUpperCase()}</div>
+                  <div style={{ fontSize: 15, color: theme.charcoal, fontFamily: "sans-serif" }}>{f.value}</div>
+                </div>
+              ))}
+            </div>
+            <div style={{ background: theme.charcoal, borderRadius: 100, padding: "14px 24px", textAlign: "center", color: "#fff", fontSize: 14, fontFamily: "sans-serif", marginTop: "auto" }}>
+              Save Maya's Profile →
+            </div>
+          </div>
+        </PhoneFrame>
+
+        {/* Step 3 */}
+        <PhoneFrame label="Step 3 of 4 — Budget & Location">
+          <div style={{ background: theme.cream, height: "100%", padding: 28, display: "flex", flexDirection: "column", gap: 20 }}>
+            <div style={{ fontSize: 11, letterSpacing: "0.3em", color: theme.stone, textTransform: "uppercase", fontFamily: "sans-serif" }}>Your Preferences</div>
+            <div style={{ fontSize: 26, color: theme.charcoal, lineHeight: 1.2 }}>A few quick things</div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              <div>
+                <div style={{ fontSize: 13, color: theme.stone, marginBottom: 10, fontFamily: "sans-serif" }}>Monthly budget per child</div>
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                  {["Under $100", "$100–$200", "$200–$400", "$400+"].map((b, i) => (
+                    <div key={b} style={{ padding: "8px 14px", borderRadius: 100, background: i === 1 ? theme.terracotta : theme.stonePale, color: i === 1 ? "#fff" : theme.charcoal, fontSize: 13, fontFamily: "sans-serif" }}>{b}</div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <div style={{ fontSize: 13, color: theme.stone, marginBottom: 10, fontFamily: "sans-serif" }}>Home neighborhood</div>
+                <div style={{ background: "#fff", border: `1px solid ${theme.stonePale}`, borderRadius: 12, padding: "12px 16px", fontSize: 15, color: theme.charcoal, fontFamily: "sans-serif" }}>Park Slope, Brooklyn</div>
+              </div>
+              <div>
+                <div style={{ fontSize: 13, color: theme.stone, marginBottom: 10, fontFamily: "sans-serif" }}>How far will you travel?</div>
+                <div style={{ display: "flex", gap: 8 }}>
+                  {["Under 1 mile", "1–3 miles", "Anywhere in NYC"].map((d, i) => (
+                    <div key={d} style={{ padding: "8px 12px", borderRadius: 100, background: i === 1 ? theme.charcoal : theme.stonePale, color: i === 1 ? "#fff" : theme.charcoal, fontSize: 12, fontFamily: "sans-serif" }}>{d}</div>
+                  ))}
+                </div>
+              </div>
+              <div style={{ background: theme.sageLight + "30", borderRadius: 12, padding: 14, borderLeft: `3px solid ${theme.sage}` }}>
+                <div style={{ fontSize: 12, color: theme.sage, fontFamily: "sans-serif", fontWeight: 600 }}>💚 Scholarship Matching</div>
+                <div style={{ fontSize: 12, color: theme.stone, fontFamily: "sans-serif", marginTop: 4 }}>Show me programs with financial aid or sliding-scale pricing</div>
+              </div>
+            </div>
+            <div style={{ background: theme.charcoal, borderRadius: 100, padding: "14px 24px", textAlign: "center", color: "#fff", fontSize: 14, fontFamily: "sans-serif", marginTop: "auto" }}>
+              Continue →
+            </div>
+          </div>
+        </PhoneFrame>
+      </div>
+    )}
+
+    {/* HOME */}
+    {activeScreen === "Home" && (
+      <div style={{ display: "flex", gap: 24, flexWrap: "wrap", justifyContent: "center" }}>
+        <PhoneFrame label="Home Feed — Parent App">
+          <div style={{ background: theme.warmWhite, height: "100%", display: "flex", flexDirection: "column" }}>
+            {/* Top bar */}
+            <div style={{ padding: "24px 24px 16px", borderBottom: `1px solid ${theme.stonePale}` }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                <div>
+                  <div style={{ fontSize: 11, color: theme.stone, letterSpacing: "0.1em", fontFamily: "sans-serif" }}>Good morning,</div>
+                  <div style={{ fontSize: 24, color: theme.charcoal, marginTop: 2 }}>Sarah 👋</div>
+                </div>
+                <div style={{ width: 40, height: 40, borderRadius: "50%", background: theme.terracotta, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: 16 }}>S</div>
+              </div>
+              {/* Child switcher */}
+              <div style={{ display: "flex", gap: 8, marginTop: 16 }}>
+                {["Maya", "Jordan"].map(c => (
+                  <div key={c} onClick={() => setActiveChild(c)} style={{ padding: "6px 16px", borderRadius: 100, background: activeChild === c ? theme.charcoal : theme.stonePale, color: activeChild === c ? "#fff" : theme.stone, fontSize: 13, cursor: "pointer", fontFamily: "sans-serif", transition: "all 0.2s" }}>{c}</div>
+                ))}
+                <div style={{ padding: "6px 16px", borderRadius: 100, border: `1px dashed ${theme.stoneLight}`, color: theme.stone, fontSize: 13, fontFamily: "sans-serif" }}>+ Add Child</div>
+              </div>
+            </div>
+            {/* AI Banner */}
+            <div style={{ margin: "16px 24px", background: `linear-gradient(135deg, ${theme.terracotta}, ${theme.terracottaLight})`, borderRadius: 16, padding: 18 }}>
+              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.7)", letterSpacing: "0.1em", fontFamily: "sans-serif", marginBottom: 6 }}>✦ MATCHED FOR {activeChild.toUpperCase()}</div>
+              <div style={{ fontSize: 17, color: "#fff", lineHeight: 1.4, marginBottom: 12 }}>3 new programs opened near you this week that fit {activeChild}'s profile</div>
+              <div style={{ background: "rgba(255,255,255,0.2)", borderRadius: 100, padding: "8px 16px", display: "inline-block", color: "#fff", fontSize: 13, fontFamily: "sans-serif" }}>See Matches →</div>
+            </div>
+            {/* Quick prompts */}
+            <div style={{ padding: "0 24px 16px" }}>
+              <div style={{ fontSize: 12, color: theme.stone, marginBottom: 10, fontFamily: "sans-serif", letterSpacing: "0.05em" }}>WHAT ARE YOU LOOKING FOR?</div>
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                {["Summer camps", "After-school", "Weekend classes", "Tryouts"].map(q => (
+                  <div key={q} style={{ padding: "8px 14px", borderRadius: 100, background: theme.cream, border: `1px solid ${theme.stonePale}`, color: theme.charcoal, fontSize: 13, fontFamily: "sans-serif" }}>{q}</div>
+                ))}
+              </div>
+            </div>
+            {/* Alerts */}
+            <div style={{ margin: "0 24px", background: theme.gold + "20", borderRadius: 12, padding: 14, borderLeft: `3px solid ${theme.gold}` }}>
+              <div style={{ fontSize: 12, color: theme.gold, fontFamily: "sans-serif", fontWeight: 600 }}>⚡ Waitlist Alert</div>
+              <div style={{ fontSize: 13, color: theme.charcoal, fontFamily: "sans-serif", marginTop: 4 }}>A spot opened at Brooklyn Soccer Academy for {activeChild}. 2 other families were notified.</div>
+              <div style={{ fontSize: 13, color: theme.terracotta, fontFamily: "sans-serif", marginTop: 8, fontWeight: 600 }}>Claim Spot →</div>
+            </div>
+            {/* Bottom nav */}
+            <div style={{ marginTop: "auto", borderTop: `1px solid ${theme.stonePale}`, display: "flex", justifyContent: "space-around", padding: "16px 0" }}>
+              {["🏠 Home", "🔍 Find", "📅 Schedule", "👤 Profile"].map(n => (
+                <div key={n} style={{ fontSize: 12, color: n.includes("Home") ? theme.terracotta : theme.stone, fontFamily: "sans-serif", textAlign: "center" }}>{n}</div>
+              ))}
+            </div>
+          </div>
+        </PhoneFrame>
+
+        {/* Annotation panel */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 16, maxWidth: 320, justifyContent: "center" }}>
+          {[
+            { icon: "✦", title: "AI-First Home Screen", body: "No empty search bar. The app already knows each child's profile and surfaces relevant matches proactively. The parent opens the app and the work is already done." },
+            { icon: "👧", title: "Child Switcher", body: "Instantly toggle between children. Each child has their own profile, enrolled programs, and match queue. The whole family lives in one account." },
+            { icon: "⚡", title: "Live Waitlist Alerts", body: "Real-time push when a spot opens. First to tap claims it. This single feature generates enormous word-of-mouth." },
+            { icon: "🎨", title: "Visual Language", body: "Warm cream + terracotta + sage. Feels like a premium lifestyle brand, not a school admin portal. The font pairing is editorial, not corporate." },
+          ].map(a => (
+            <AnnotationCard key={a.title} {...a} />
+          ))}
+        </div>
+      </div>
+    )}
+
+    {/* DISCOVERY */}
+    {activeScreen === "Discovery" && (
+      <div style={{ display: "flex", gap: 24, flexWrap: "wrap", justifyContent: "center" }}>
+        <PhoneFrame label="AI Discovery — Search Results">
+          <div style={{ background: theme.warmWhite, height: "100%", display: "flex", flexDirection: "column" }}>
+            {/* Search bar */}
+            <div style={{ padding: "20px 20px 16px", background: theme.cream, borderBottom: `1px solid ${theme.stonePale}` }}>
+              <div style={{ background: "#fff", border: `1px solid ${theme.stonePale}`, borderRadius: 12, padding: "12px 16px", fontSize: 14, color: theme.charcoal, fontFamily: "sans-serif", marginBottom: 10 }}>
+                🔍 "Soccer camp in July, Brooklyn..."
+              </div>
+              <div style={{ fontSize: 12, color: theme.stone, fontFamily: "sans-serif" }}>Showing <strong style={{ color: theme.charcoal }}>3 curated matches</strong> for Maya · Sorted by fit</div>
+            </div>
+            {/* Results */}
+            <div style={{ flex: 1, overflow: "auto", padding: "16px 20px", display: "flex", flexDirection: "column", gap: 14 }}>
+              {mockPrograms.map((p, i) => (
+                <div key={p.id} onClick={() => { setSelectedProgram(p); setActiveScreen("Program"); }}
+                  style={{ background: "#fff", borderRadius: 16, padding: 18, border: `1px solid ${theme.stonePale}`, cursor: "pointer", position: "relative", boxShadow: i === 0 ? `0 4px 20px ${theme.terracotta}20` : "none", transition: "all 0.2s" }}>
+                  {i === 0 && <div style={{ position: "absolute", top: -8, left: 16, background: theme.terracotta, color: "#fff", fontSize: 10, padding: "3px 10px", borderRadius: 100, fontFamily: "sans-serif", letterSpacing: "0.1em" }}>BEST MATCH</div>}
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
+                    <div>
+                      <div style={{ fontSize: 16, color: theme.charcoal, marginBottom: 2 }}>{p.emoji} {p.name}</div>
+                      <div style={{ fontSize: 12, color: theme.stone, fontFamily: "sans-serif" }}>{p.neighborhood} · {p.category}</div>
+                    </div>
+                    <div style={{ textAlign: "right" }}>
+                      <div style={{ fontSize: 16, color: p.color, fontWeight: 700, fontFamily: "sans-serif" }}>{p.match}%</div>
+                      <div style={{ fontSize: 10, color: theme.stone, fontFamily: "sans-serif" }}>match</div>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", gap: 16, marginBottom: 12 }}>
+                    <div style={{ fontSize: 13, color: theme.charcoal, fontFamily: "sans-serif" }}>💰 {p.price}</div>
+                    <div style={{ fontSize: 13, color: theme.charcoal, fontFamily: "sans-serif" }}>📅 {p.schedule}</div>
+                  </div>
+                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
+                    {p.tags.map(t => (
+                      <div key={t} style={{ padding: "4px 10px", borderRadius: 100, background: theme.cream, color: theme.stone, fontSize: 11, fontFamily: "sans-serif" }}>{t}</div>
+                    ))}
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <div style={{ fontSize: 12, color: theme.stone, fontFamily: "sans-serif" }}>⭐ {p.rating} ({p.reviews} reviews)</div>
+                    <div style={{ fontSize: 12, color: p.spotsLeft <= 2 ? theme.terracotta : theme.sage, fontFamily: "sans-serif", fontWeight: 600 }}>{p.spotsLeft} spot{p.spotsLeft !== 1 ? "s" : ""} left</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </PhoneFrame>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 16, maxWidth: 320, justifyContent: "center" }}>
+          {[
+            { icon: "🤖", title: "3 Results, Not 47", body: "The AI matching engine filters thousands of programs to the 3 best fits. Parents don't browse — they choose. This is the core product promise." },
+            { icon: "📊", title: "Match Score", body: "Every result shows a % match based on the child's profile. Factors: schedule fit, budget, distance, needs, interests, skill level. Transparent and trusted." },
+            { icon: "🔴", title: "Scarcity Signals", body: "Real-time spot counts create urgency and trust. Parents know the data is live. '3 spots left' drives immediate action." },
+            { icon: "👆", title: "Tap to Explore", body: "Tapping any card opens the full Program View. The registration button is always one tap away from any screen." },
+          ].map(a => (
+            <AnnotationCard key={a.title} {...a} />
+          ))}
+        </div>
+      </div>
+    )}
+
+    {/* PROGRAM DETAIL */}
+    {activeScreen === "Program" && (
+      <div style={{ display: "flex", gap: 24, flexWrap: "wrap", justifyContent: "center" }}>
+        <PhoneFrame label="Program Detail View">
+          <div style={{ background: theme.warmWhite, height: "100%", display: "flex", flexDirection: "column" }}>
+            {/* Hero */}
+            <div style={{ background: `linear-gradient(160deg, ${theme.sage}, ${theme.sageLight})`, padding: "28px 24px 24px", position: "relative" }}>
+              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.7)", letterSpacing: "0.1em", fontFamily: "sans-serif", marginBottom: 8 }}>⚽ SOCCER · PARK SLOPE</div>
+              <div style={{ fontSize: 26, color: "#fff", lineHeight: 1.2, marginBottom: 6 }}>Brooklyn Soccer Academy</div>
+              <div style={{ fontSize: 14, color: "rgba(255,255,255,0.8)", fontFamily: "sans-serif" }}>⭐ 4.9 · 84 parent reviews</div>
+              <div style={{ position: "absolute", top: 20, right: 20, background: "rgba(255,255,255,0.25)", borderRadius: 100, padding: "6px 14px", fontSize: 13, color: "#fff", fontFamily: "sans-serif" }}>98% match ✦</div>
+            </div>
+            {/* Details */}
+            <div style={{ flex: 1, overflow: "auto", padding: 24, display: "flex", flexDirection: "column", gap: 18 }}>
+              <div style={{ display: "flex", gap: 12 }}>
+                {[{ icon: "💰", val: "$180/mo" }, { icon: "📅", val: "Sat–Sun 9am" }, { icon: "📍", val: "0.8 mi away" }].map(d => (
+                  <div key={d.val} style={{ flex: 1, background: theme.cream, borderRadius: 12, padding: "12px 8px", textAlign: "center" }}>
+                    <div style={{ fontSize: 18, marginBottom: 4 }}>{d.icon}</div>
+                    <div style={{ fontSize: 12, color: theme.charcoal, fontFamily: "sans-serif" }}>{d.val}</div>
+                  </div>
+                ))}
+              </div>
+              {/* Why it matches */}
+              <div style={{ background: theme.terracotta + "12", borderRadius: 12, padding: 16, borderLeft: `3px solid ${theme.terracotta}` }}>
+                <div style={{ fontSize: 12, color: theme.terracotta, fontFamily: "sans-serif", fontWeight: 600, marginBottom: 8 }}>✦ Why this matches Maya</div>
+                {["Offers early drop-off from 7:45am", "Peanut-free facility confirmed", "Ages 7–10 division available", "Within your $200/mo budget"].map(r => (
+                  <div key={r} style={{ fontSize: 13, color: theme.charcoal, fontFamily: "sans-serif", marginBottom: 4, display: "flex", gap: 8 }}><span style={{ color: theme.sage }}>✓</span>{r}</div>
+                ))}
+              </div>
+              {/* Program info */}
+              <div>
+                <div style={{ fontSize: 13, color: theme.stone, fontFamily: "sans-serif", marginBottom: 8, letterSpacing: "0.05em" }}>ABOUT THE PROGRAM</div>
+                <div style={{ fontSize: 14, color: theme.charcoal, fontFamily: "sans-serif", lineHeight: 1.6 }}>
+                  Competitive and recreational soccer training for children ages 5–14. Professional coaching staff, focus on fundamentals and teamwork. Spring and summer sessions available.
+                </div>
+              </div>
+              <div style={{ display: "flex", gap: 8 }}>
+                <div style={{ flex: 1, background: theme.stonePale, borderRadius: 12, padding: 14, textAlign: "center" }}>
+                  <div style={{ fontSize: 11, color: theme.stone, fontFamily: "sans-serif" }}>SPOTS LEFT</div>
+                  <div style={{ fontSize: 22, color: theme.terracotta, fontFamily: "sans-serif", fontWeight: 700 }}>3</div>
+                </div>
+                <div style={{ flex: 1, background: theme.stonePale, borderRadius: 12, padding: 14, textAlign: "center" }}>
+                  <div style={{ fontSize: 11, color: theme.stone, fontFamily: "sans-serif" }}>NEXT START</div>
+                  <div style={{ fontSize: 16, color: theme.charcoal, fontFamily: "sans-serif", fontWeight: 600 }}>June 7</div>
+                </div>
+              </div>
+            </div>
+            {/* CTA */}
+            <div style={{ padding: "16px 24px", borderTop: `1px solid ${theme.stonePale}` }}>
+              <div onClick={() => setActiveScreen("Registration")} style={{ background: theme.terracotta, borderRadius: 100, padding: "16px 24px", textAlign: "center", color: "#fff", fontSize: 16, cursor: "pointer", fontFamily: "sans-serif" }}>
+                Register Maya — One Tap →
+              </div>
+            </div>
+          </div>
+        </PhoneFrame>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 16, maxWidth: 320, justifyContent: "center" }}>
+          {[
+            { icon: "✦", title: '"Why This Matches" Panel', body: "This is the trust-builder. The AI explains exactly why it recommended this program for this specific child. Parents feel understood, not sold to." },
+            { icon: "📋", title: "All Info, One Screen", body: "Price, schedule, distance, spots, start date, allergy confirmation — everything a parent needs to decide, without leaving the app." },
+            { icon: "👆", title: "One-Tap Registration", body: "The CTA is always present and always clear. Tapping it opens the AI Registration flow — pre-filled, waiver-included, done in 60 seconds." },
+          ].map(a => (
+            <AnnotationCard key={a.title} {...a} />
+          ))}
+        </div>
+      </div>
+    )}
+
+    {/* REGISTRATION */}
+    {activeScreen === "Registration" && (
+      <div style={{ display: "flex", gap: 24, flexWrap: "wrap", justifyContent: "center" }}>
+        <PhoneFrame label="AI Registration Flow">
+          <div style={{ background: theme.warmWhite, height: "100%", display: "flex", flexDirection: "column" }}>
+            {!registered ? (
+              <>
+                <div style={{ padding: "24px 24px 16px", borderBottom: `1px solid ${theme.stonePale}` }}>
+                  <div style={{ fontSize: 11, color: theme.stone, letterSpacing: "0.1em", fontFamily: "sans-serif", marginBottom: 6 }}>REGISTERING</div>
+                  <div style={{ fontSize: 22, color: theme.charcoal }}>Brooklyn Soccer Academy</div>
+                  <div style={{ fontSize: 14, color: theme.stone, fontFamily: "sans-serif", marginTop: 4 }}>June 7 – Aug 30 · $180/month</div>
+                </div>
+                <div style={{ flex: 1, padding: 24, display: "flex", flexDirection: "column", gap: 16, overflow: "auto" }}>
+                  <div style={{ background: theme.sage + "20", borderRadius: 12, padding: 14, borderLeft: `3px solid ${theme.sage}` }}>
+                    <div style={{ fontSize: 12, color: theme.sage, fontFamily: "sans-serif", fontWeight: 600 }}>✦ Pre-filled from Maya's profile</div>
+                    <div style={{ fontSize: 12, color: theme.stone, fontFamily: "sans-serif", marginTop: 4 }}>We've completed the form using saved information. Review and confirm.</div>
+                  </div>
+                  {[
+                    { label: "Child", value: "Maya, Age 9" },
+                    { label: "Parent / Guardian", value: "Sarah Johnson" },
+                    { label: "Emergency Contact", value: "Marcus Johnson · (917) 555-0182" },
+                    { label: "Allergy on File", value: "Peanut allergy — noted ✓" },
+                    { label: "Drop-off Preference", value: "Early drop-off, 7:45am" },
+                    { label: "Payment", value: "Visa ···· 4821 · $180/mo" },
+                  ].map(f => (
+                    <div key={f.label} style={{ borderBottom: `1px solid ${theme.stonePale}`, paddingBottom: 12 }}>
+                      <div style={{ fontSize: 11, color: theme.stone, fontFamily: "sans-serif", letterSpacing: "0.05em", marginBottom: 3 }}>{f.label.toUpperCase()}</div>
+                      <div style={{ fontSize: 14, color: theme.charcoal, fontFamily: "sans-serif" }}>{f.value}</div>
+                    </div>
+                  ))}
+                  <div style={{ background: theme.cream, borderRadius: 12, padding: 14 }}>
+                    <div style={{ fontSize: 12, color: theme.stone, fontFamily: "sans-serif", marginBottom: 6 }}>WAIVER & RELEASE</div>
+                    <div style={{ fontSize: 13, color: theme.charcoal, fontFamily: "sans-serif", lineHeight: 1.5 }}>
+                      Standard liability waiver. Signed digitally and stored in your account.
+                    </div>
+                    <div style={{ fontSize: 13, color: theme.terracotta, fontFamily: "sans-serif", marginTop: 8 }}>☑ I agree to the program waiver</div>
+                  </div>
+                </div>
+                <div style={{ padding: "16px 24px", borderTop: `1px solid ${theme.stonePale}` }}>
+                  <div onClick={handleRegister} style={{ background: registering ? theme.stone : theme.terracotta, borderRadius: 100, padding: "16px 24px", textAlign: "center", color: "#fff", fontSize: 16, cursor: "pointer", fontFamily: "sans-serif", transition: "all 0.3s" }}>
+                    {registering ? "Confirming enrollment..." : "Confirm Registration →"}
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 32, gap: 20 }}>
+                <div style={{ fontSize: 64 }}>🎉</div>
+                <div style={{ fontSize: 28, color: theme.charcoal, textAlign: "center" }}>Maya's enrolled!</div>
+                <div style={{ fontSize: 15, color: theme.stone, fontFamily: "sans-serif", textAlign: "center", lineHeight: 1.6 }}>
+                  Brooklyn Soccer Academy · June 7 start<br />Confirmation sent to sarah@email.com
+                </div>
+                <div style={{ background: theme.cream, borderRadius: 16, padding: 20, width: "100%", display: "flex", flexDirection: "column", gap: 10 }}>
+                  <div style={{ fontSize: 13, color: theme.stone, fontFamily: "sans-serif" }}>✅ Registration confirmed</div>
+                  <div style={{ fontSize: 13, color: theme.stone, fontFamily: "sans-serif" }}>✅ Waiver signed & filed</div>
+                  <div style={{ fontSize: 13, color: theme.stone, fontFamily: "sans-serif" }}>✅ Added to Family Schedule</div>
+                  <div style={{ fontSize: 13, color: theme.stone, fontFamily: "sans-serif" }}>✅ Payment set up · $180/mo</div>
+                </div>
+                <div style={{ background: theme.terracotta, borderRadius: 100, padding: "14px 32px", color: "#fff", fontSize: 15, fontFamily: "sans-serif", cursor: "pointer" }}>
+                  Back to Home
+                </div>
+              </div>
+            )}
+          </div>
+        </PhoneFrame>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 16, maxWidth: 320, justifyContent: "center" }}>
+          {[
+            { icon: "⚡", title: "Pre-Filled by AI Agent", body: "The registration agent pulls from the child's saved profile. Parent name, emergency contacts, allergies, payment — all pre-populated. Review and tap confirm." },
+            { icon: "📄", title: "Waiver Handled In-App", body: "Digital waiver generated, signed, and stored in the parent's account AND the provider's dashboard. No paper, no email, no clipboard at drop-off." },
+            { icon: "🎉", title: "The Confirmation Moment", body: "This screen is a product decision, not just UX. The celebration moment + instant checklist builds confidence and trust. Parents remember this feeling." },
+            { icon: "💳", title: "Payment & Recurring Billing", body: "Monthly billing is set up in one tap. The platform handles the recurring charge and sends receipts. Providers get paid automatically." },
+          ].map(a => (
+            <AnnotationCard key={a.title} {...a} />
+          ))}
+        </div>
+      </div>
+    )}
+
+    {/* FAMILY OS */}
+    {activeScreen === "Family OS" && (
+      <div style={{ display: "flex", gap: 24, flexWrap: "wrap", justifyContent: "center" }}>
+        <PhoneFrame label="Family OS — Schedule View">
+          <div style={{ background: theme.warmWhite, height: "100%", display: "flex", flexDirection: "column" }}>
+            <div style={{ padding: "20px 24px 16px", borderBottom: `1px solid ${theme.stonePale}` }}>
+              <div style={{ fontSize: 11, color: theme.stone, letterSpacing: "0.1em", fontFamily: "sans-serif", marginBottom: 4 }}>THIS WEEK</div>
+              <div style={{ fontSize: 24, color: theme.charcoal }}>Family Schedule</div>
+            </div>
+            {/* Week view */}
+            <div style={{ padding: "16px 20px", display: "flex", gap: 8, overflow: "auto" }}>
+              {["M", "T", "W", "T", "F", "S", "S"].map((d, i) => (
+                <div key={i} style={{ flex: 1, textAlign: "center", minWidth: 36 }}>
+                  <div style={{ fontSize: 11, color: theme.stone, fontFamily: "sans-serif", marginBottom: 6 }}>{d}</div>
+                  <div style={{ width: 32, height: 32, borderRadius: "50%", background: i === 5 || i === 2 ? theme.terracotta : theme.cream, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto", color: i === 5 || i === 2 ? "#fff" : theme.stone, fontSize: 13, fontFamily: "sans-serif" }}>
+                    {20 + i}
+                  </div>
+                </div>
+              ))}
+            </div>
+            {/* Events */}
+            <div style={{ flex: 1, padding: "0 20px 16px", display: "flex", flexDirection: "column", gap: 12, overflow: "auto" }}>
+              <div style={{ fontSize: 11, color: theme.stone, fontFamily: "sans-serif", letterSpacing: "0.05em" }}>ALL ENROLLED PROGRAMS</div>
+              {familyEvents.map((e, i) => (
+                <div key={i} style={{ background: "#fff", border: `1px solid ${theme.stonePale}`, borderRadius: 14, padding: 16, borderLeft: `4px solid ${e.color}` }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                    <div>
+                      <div style={{ fontSize: 14, color: theme.charcoal, marginBottom: 3 }}>{e.program}</div>
+                      <div style={{ fontSize: 12, color: theme.stone, fontFamily: "sans-serif" }}>{e.day} · {e.time}</div>
+                    </div>
+                    <div style={{ background: e.color + "20", color: e.color, padding: "4px 10px", borderRadius: 100, fontSize: 12, fontFamily: "sans-serif" }}>{e.child}</div>
+                  </div>
+                </div>
+              ))}
+              {/* Conflict alert */}
+              <div style={{ background: theme.gold + "20", borderRadius: 12, padding: 14, borderLeft: `3px solid ${theme.gold}` }}>
+                <div style={{ fontSize: 12, color: theme.gold, fontFamily: "sans-serif", fontWeight: 600 }}>⚠️ Schedule Note</div>
+                <div style={{ fontSize: 12, color: theme.charcoal, fontFamily: "sans-serif", marginTop: 4 }}>Maya's piano lesson and Jordan's swim overlap on Wednesday. Tap to resolve.</div>
+              </div>
+              {/* Renewal reminder */}
+              <div style={{ background: theme.sage + "20", borderRadius: 12, padding: 14, borderLeft: `3px solid ${theme.sage}` }}>
+                <div style={{ fontSize: 12, color: theme.sage, fontFamily: "sans-serif", fontWeight: 600 }}>📅 Re-enrollment opens soon</div>
+                <div style={{ fontSize: 12, color: theme.charcoal, fontFamily: "sans-serif", marginTop: 4 }}>Brooklyn Soccer Academy Fall session opens May 1. Want us to hold Maya's spot?</div>
+              </div>
+            </div>
+          </div>
+        </PhoneFrame>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 16, maxWidth: 320, justifyContent: "center" }}>
+          {[
+            { icon: "📅", title: "The Family OS Layer", body: "Every enrolled program for every child, in one place. This is what turns the platform from a useful tool into an indispensable one. Parents stop using Google Calendar for kids' activities." },
+            { icon: "⚠️", title: "Conflict Detection", body: "The AI flags schedule overlaps automatically. This is the feature that makes families realize the platform is actually thinking for them." },
+            { icon: "🔄", title: "Re-enrollment Intelligence", body: "The platform knows when programs are ending and when registration opens. It prompts re-enrollment before the parent even thinks about it." },
+            { icon: "🏠", title: "Year 2 Stickiness", body: "This feature alone makes churn nearly impossible. Once a family's entire schedule lives here, they cannot leave." },
+          ].map(a => (
+            <AnnotationCard key={a.title} {...a} />
+          ))}
+        </div>
+      </div>
+    )}
+
+    {/* PROVIDER DASHBOARD */}
+    {activeScreen === "Provider Dashboard" && (
+      <div style={{ display: "flex", gap: 24, flexWrap: "wrap", justifyContent: "center" }}>
+        <div style={{ width: 420, background: theme.softBlack, borderRadius: 24, overflow: "hidden", border: `1px solid rgba(255,255,255,0.08)` }}>
+          <div style={{ padding: "28px 32px 20px", borderBottom: `1px solid rgba(255,255,255,0.08)` }}>
+            <div style={{ fontSize: 11, color: theme.stone, letterSpacing: "0.2em", fontFamily: "sans-serif", marginBottom: 8 }}>PROVIDER DASHBOARD</div>
+            <div style={{ fontSize: 28, color: theme.cream }}>Brooklyn Soccer Academy</div>
+            <div style={{ fontSize: 14, color: theme.stone, fontFamily: "sans-serif", marginTop: 4 }}>Pro Plan · April 2026</div>
+          </div>
+          {/* Stats */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, background: "rgba(255,255,255,0.05)" }}>
+            {providerStats.map(s => (
+              <div key={s.label} style={{ background: theme.softBlack, padding: "20px 24px" }}>
+                <div style={{ fontSize: 11, color: theme.stone, fontFamily: "sans-serif", letterSpacing: "0.05em", marginBottom: 8 }}>{s.label.toUpperCase()}</div>
+                <div style={{ fontSize: 28, color: theme.cream, marginBottom: 4, fontFamily: "sans-serif", fontWeight: 300 }}>{s.value}</div>
+                <div style={{ fontSize: 12, color: theme.sage, fontFamily: "sans-serif" }}>{s.change} this month</div>
+              </div>
+            ))}
+          </div>
+          {/* Enrollment pipeline */}
+          <div style={{ padding: "24px 32px" }}>
+            <div style={{ fontSize: 11, color: theme.stone, letterSpacing: "0.1em", fontFamily: "sans-serif", marginBottom: 16 }}>ENROLLMENT PIPELINE</div>
+            {[
+              { label: "Confirmed Enrollments", count: 28, color: theme.sage },
+              { label: "Pending (awaiting payment)", count: 7, color: theme.gold },
+              { label: "On Waitlist", count: 14, color: theme.stoneLight },
+            ].map(p => (
+              <div key={p.label} style={{ marginBottom: 14 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+                  <div style={{ fontSize: 13, color: theme.cream, fontFamily: "sans-serif" }}>{p.label}</div>
+                  <div style={{ fontSize: 13, color: p.color, fontFamily: "sans-serif", fontWeight: 600 }}>{p.count}</div>
+                </div>
+                <div style={{ height: 4, background: "rgba(255,255,255,0.1)", borderRadius: 100 }}>
+                  <div style={{ height: "100%", width: `${(p.count / 35) * 100}%`, background: p.color, borderRadius: 100 }} />
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* AI Insight */}
+          <div style={{ margin: "0 32px 24px", background: `linear-gradient(135deg, ${theme.terracotta}30, ${theme.gold}20)`, border: `1px solid ${theme.terracotta}40`, borderRadius: 14, padding: 18 }}>
+            <div style={{ fontSize: 11, color: theme.terracotta, fontFamily: "sans-serif", letterSpacing: "0.1em", marginBottom: 8 }}>✦ AI INSIGHT</div>
+            <div style={{ fontSize: 14, color: theme.cream, lineHeight: 1.5, fontFamily: "sans-serif" }}>
+              Your Friday 4pm slot fills 3× faster than Saturday morning. Consider adding a second Friday session — demand data suggests 22 additional parents would enroll.
+            </div>
+          </div>
+          {/* Waiver status */}
+          <div style={{ margin: "0 32px 32px", display: "flex", gap: 12 }}>
+            <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", borderRadius: 12, padding: 16, textAlign: "center" }}>
+              <div style={{ fontSize: 22, color: theme.cream, fontFamily: "sans-serif" }}>28</div>
+              <div style={{ fontSize: 11, color: theme.stone, fontFamily: "sans-serif" }}>WAIVERS SIGNED</div>
+            </div>
+            <div style={{ flex: 1, background: "rgba(255,255,255,0.05)", borderRadius: 12, padding: 16, textAlign: "center" }}>
+              <div style={{ fontSize: 22, color: theme.gold, fontFamily: "sans-serif" }}>3</div>
+              <div style={{ fontSize: 11, color: theme.stone, fontFamily: "sans-serif" }}>PENDING WAIVERS</div>
+            </div>
+          </div>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 16, maxWidth: 320, justifyContent: "center" }}>
+          {[
+            { icon: "📊", title: "This is B2B Software, Not a Listing", body: "Providers aren't paying for a badge. They're paying for a business intelligence tool that shows them exactly how many parents are watching their program and converting." },
+            { icon: "✦", title: "The AI Insight Card", body: "This is the premium feature that justifies the Pro tier. Telling a soccer coach 'add a Friday slot, 22 parents are waiting' is worth far more than $199/month." },
+            { icon: "📄", title: "Waiver Management", body: "Every signed waiver lives here. No paper, no lost forms. Providers can pull any child's waiver in seconds. This alone replaces their admin software." },
+            { icon: "🌙", title: "Dark Dashboard Aesthetic", body: "The provider dashboard deliberately feels different from the parent app. Business tool energy. Dark, data-forward, serious — Shopify meets Stripe." },
+          ].map(a => (
+            <AnnotationCard key={a.title} {...a} />
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+
+  {/* Footer */}
+  <div style={{ marginTop: 56, textAlign: "center" }}>
+    <div style={{ fontSize: 11, color: theme.stone, letterSpacing: "0.2em", fontFamily: "sans-serif", textTransform: "uppercase", marginBottom: 8 }}>Platform Architecture · NYC Youth Activity Concierge</div>
+    <div style={{ fontSize: 13, color: theme.stone + "80", fontFamily: "sans-serif" }}>Parent App · AI Agent Layer · Provider Dashboard · Family OS</div>
+  </div>
+</div>
+```
+
+);
+}
+
+function PhoneFrame({ children, label }) {
+return (
+<div style={{ display: “flex”, flexDirection: “column”, alignItems: “center”, gap: 12 }}>
+<div style={{ fontSize: 11, color: theme.stone, fontFamily: “sans-serif”, letterSpacing: “0.1em”, textTransform: “uppercase” }}>{label}</div>
+<div style={{ width: 340, height: 680, background: theme.charcoal, borderRadius: 44, padding: 12, boxShadow: “0 32px 80px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.1)” }}>
+{/* Notch */}
+<div style={{ width: 100, height: 28, background: theme.charcoal, borderRadius: 100, margin: “0 auto 8px”, position: “relative”, zIndex: 10 }} />
+<div style={{ height: 580, borderRadius: 34, overflow: “hidden” }}>
+{children}
+</div>
+</div>
+</div>
+);
+}
+
+function AnnotationCard({ icon, title, body }) {
+return (
+<div style={{ background: “rgba(255,255,255,0.04)”, border: “1px solid rgba(255,255,255,0.08)”, borderRadius: 16, padding: 20 }}>
+<div style={{ fontSize: 20, marginBottom: 8 }}>{icon}</div>
+<div style={{ fontSize: 14, color: theme.cream, marginBottom: 6 }}>{title}</div>
+<div style={{ fontSize: 13, color: theme.stone, fontFamily: “sans-serif”, lineHeight: 1.6 }}>{body}</div>
+</div>
+);
+}
