@@ -43,7 +43,7 @@ export function SaveButton({ programId, childId, saved: initialSaved, className 
       aria-label={saved ? 'Unsave program' : 'Save program'}
       className={`flex items-center justify-center w-9 h-9 rounded-full transition-all duration-200 ${
         saved
-          ? 'bg-terracotta text-warm-white'
+          ? 'bg-sage text-warm-white'
           : 'bg-parchment text-stone hover:bg-stone-pale hover:text-ink'
       } ${className}`}
     >

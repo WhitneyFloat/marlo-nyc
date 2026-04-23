@@ -3,9 +3,9 @@
 import Link from 'next/link'
 
 interface MatchBannerProps {
-  childName: string
+  childName:  string
   matchCount: number
-  query?: string
+  query?:     string
 }
 
 export function MatchBanner({ childName, matchCount, query }: MatchBannerProps) {
@@ -14,14 +14,19 @@ export function MatchBanner({ childName, matchCount, query }: MatchBannerProps) 
       className="rounded-2xl p-6 animate-fade-in"
       style={{ background: 'linear-gradient(135deg, #C4603A 0%, #E8896A 100%)' }}
     >
-      <p className="text-warm-white text-xs uppercase tracking-widest mb-2 font-body opacity-80">
-        Marlo&apos;s picks
-      </p>
+      <div className="flex items-center gap-2 mb-2">
+        <span
+          className="text-xs uppercase tracking-widest font-body px-2.5 py-0.5 rounded-full"
+          style={{ background: '#6B9E7040', color: '#D4EAD6' }}
+        >
+          Marlo&apos;s picks
+        </span>
+      </div>
       <h2
         className="text-warm-white text-2xl leading-tight mb-4"
         style={{ fontFamily: '"Palatino Linotype", "Book Antiqua", Palatino, serif' }}
       >
-        Marlo found {matchCount} {matchCount === 1 ? 'match' : 'matches'} for {childName} this week.
+        {matchCount} {matchCount === 1 ? 'match' : 'matches'} found for {childName} this week.
       </h2>
       <Link
         href={`/search${query ? `?q=${encodeURIComponent(query)}` : ''}`}
